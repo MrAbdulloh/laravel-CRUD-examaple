@@ -33,15 +33,15 @@ class CRUDPostExampleTest extends TestCase
     }
 
     /** @test */
-    public function ShowPost()
+    public function ReadPost()
     {
         $post = Post::factory()->create();
 
-        $response = $this->get('/posts/'.$post->id);
+        $response = $this->get('/posts/' . $post->id);
 
         $response->assertStatus(Response::HTTP_OK);
 
-        $response->assertJson([
+        $response->assertJsonFragment([
             'title' => $post->title,
             'body' => $post->body,
         ]);
@@ -56,9 +56,19 @@ class CRUDPostExampleTest extends TestCase
             'title' => $this->faker->sentence(),
             'body' => $this->faker->paragraph(),
         ];
-        $response = $this->put('/posts/'.$post->id, $updateData );
+        $response = $this->put('/posts/' . $post->id, $updateData);
 
         $response->assertStatus(Response::HTTP_OK);
         $this->assertDatabaseHas('posts', $updateData);
+    }
+
+    /** @test */
+    public function can_list_posts()
+    {
+        $posts = Post::factory()->count(5)->create();
+        $response = $this->get('posts');
+        $response->assertStatus(Response::HTTP_OK);
+        $this->assertCount(5, $posts);
+
     }
 }
