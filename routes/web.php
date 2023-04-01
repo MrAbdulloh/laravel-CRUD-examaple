@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -27,3 +28,8 @@ Route::put('posts/{post}', [PostController::class, 'update']);
 Route::post('users', [UserController::class, 'create']);
 Route::get('users/{user}', [UserController::class, 'show']);
 Route::put('users/{user}', [UserController::class, 'update']);
+
+Route::post('comments', [CommentController::class, 'create']);
+Route::get('comments/{comment}', [CommentController::class, 'show']);
+Route::put('comments/{comment}', [CommentController::class, 'update']);
+
