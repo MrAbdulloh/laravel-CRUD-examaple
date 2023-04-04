@@ -23,10 +23,11 @@ class CRUDPostExampleTest extends TestCase
     /** @test */
     public function CreatePost()
     {
-         $postData = [
-            'title' => $this->faker->sentence(),
-            'body' => $this->faker->paragraph(),
-        ];
+        $postData = Post::factory()->make()->toArray();
+//         $postData = [
+//            'title' => $this->faker->sentence(),
+//            'body' => $this->faker->paragraph(),
+//        ];
         $response = $this->post('/posts', $postData);
         $response->assertStatus(Response::HTTP_CREATED);
         $this->assertDatabaseHas('posts', $postData);
